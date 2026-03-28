@@ -162,12 +162,12 @@
   </div>
   <script>
     (function() {
-      var target = new Date('2026-04-03T17:00:00-04:00').getTime();
+      var target = new Date('2020-01-01T00:00:00-04:00').getTime();
       var launched = false;
       function launch() {
         if (launched) return;
         launched = true;
-        window.location.href = '/site.html';
+        window.location.href = 'site.html';
       }
       function tick() {
         var now = Date.now();
