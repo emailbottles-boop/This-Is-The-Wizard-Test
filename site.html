@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Wizard Shit - Animated Series by Independent Creators</title>
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Wizard Shit is an independent animated series featuring magical adventures, unique characters, and stunning animation. Watch episodes, get merch, and support independent animation.">
+<meta name="keywords" content="Wizard Shit, wizard animation, independent animation, animated series, wizard city, magic animation, indie animation, wizard merch, animated comedy">
+<meta name="author" content="Wizard Shit Animation Team">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wizardshit.com/">
+<meta property="og:title" content="Wizard Shit - Independent Animated Series">
+<meta property="og:description" content="An independent animated series featuring magical adventures in Wizard City. Watch episodes and support indie animation.">
+<meta property="og:image" content="https://wizardshit.com/wizshtlogo_trans.png">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://wizardshit.com/">
+<meta property="twitter:title" content="Wizard Shit - Independent Animated Series">
+<meta property="twitter:description" content="An independent animated series featuring magical adventures in Wizard City. Watch episodes and support indie animation.">
+<meta property="twitter:image" content="https://wizardshit.com/wizshtlogo_trans.png">
+
+<!-- Additional SEO -->
+<link rel="canonical" href="https://wizardshit.com/">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#07000f">
+
+<style>
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: #0e0520;
+  font-family: system-ui, sans-serif;
+  color: white;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ===== DEVICE MODES ===== */
+body.mobile {
+  --bg-strength: 0.02;
+  --letter-life: 4200ms;
+}
+body.desktop {
+  --bg-strength: 0.07;
+  --letter-life: 9000ms;
+  overflow: hidden;
+}
+
+/* ===== BASE BACKGROUND ===== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -120%;
+  background:
+    repeating-linear-gradient(60deg, rgba(255,220,120,0.15) 0 1px, transparent 1px 70px),
+    repeating-linear-gradient(-60deg, rgba(180,0,255,0.2) 0 1px, transparent 1px 100px);
+  transform: translate(
+    calc(var(--mx, 0px) * -1 * var(--bg-strength)),
+    calc(var(--my, 0px) * -1 * var(--bg-strength))
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== WATER VIDEO ===== */
+.water-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1.6s ease;
+  pointer-events: none;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.water-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(0,0,0,0.05), rgba(0,0,0,0.55) 75%);
+}
+
+.water-layer video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.75) saturate(1.3) blur(1.2px);
+  animation: waterBreath 14s ease-in-out infinite;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@keyframes waterBreath {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.035); }
+}
+
+/* ===== NEON EDGES ===== */
+.edge {
+  display: none;
+}
+
+/* ===== CRYPTO FIELD ===== */
+#cryptoField {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.crypto {
+  position: absolute;
+  font-weight: 900;
+  opacity: 0.85;
+  color: rgba(230,160,255,0.4);
+  text-shadow:
+    0 0 10px rgba(255,220,255,0.9),
+    0 0 28px rgba(180,80,255,0.7),
+    0 0 48px rgba(255,220,120,0.35);
+  animation: drift var(--letter-life) ease-out forwards;
+}
+
+@keyframes drift {
+  from { transform: translateY(40px); opacity: 1; }
+  to { transform: translateY(-180px) scale(1.3); opacity: 0; }
+}
+
+/* ===== SCREENS ===== */
+.screen {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px) scale(0.98);
+  transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.screen.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+/* ===== HOME ===== */
+
+.home-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+/* ===== LOGO ===== */
+.logo-wrap {
+  position: relative;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Radial glow — circular halo, independent of PNG bounding box */
+.logo-wrap::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%) scale(2.4);
+  background: radial-gradient(ellipse at center, rgba(200,120,255,0.88) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.logo {
+  width: 340px;
+  max-width: 85vw;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+@media (hover: hover) {
+  .logo-wrap {
+    transition: transform 0.3s ease;
+  }
+  .logo-wrap:hover:not(.logo-trip) {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes logoTrip {
+  0%   { transform: scale(1); }
+  10%  { transform: scale(1.07); }
+  35%  { transform: scale(1.03); }
+  65%  { transform: scale(1.005); }
+  100% { transform: scale(1); }
+}
+
+.logo-trip {
+  animation: logoTrip 1.5s ease-out;
+}
+
+@keyframes tripRipple {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.75; }
+  100% { transform: translate(-50%, -50%) scale(7); opacity: 0; }
+}
+
+.trip-ripple {
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999;
+  animation: tripRipple var(--ripple-dur, 1.4s) cubic-bezier(0.2, 0.8, 0.4, 1) forwards;
+  background: conic-gradient(
+    from var(--ripple-start, 0deg),
+    rgba(255,0,100,0.35),
+    rgba(255,160,0,0.25),
+    rgba(200,255,0,0.2),
+    rgba(0,255,140,0.25),
+    rgba(0,160,255,0.3),
+    rgba(160,0,255,0.35),
+    rgba(255,0,100,0.35)
+  );
+  mask-image: radial-gradient(circle, transparent 35%, black 50%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle, transparent 35%, black 50%, transparent 75%);
+}
+
+@keyframes tripBloom {
+  0%   { opacity: 0; }
+  12%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.trip-bloom {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  animation: tripBloom 1.6s ease-out forwards;
+  background: radial-gradient(
+    ellipse at var(--bx, 50%) var(--by, 50%),
+    rgba(255,80,200,0.1) 0%,
+    rgba(100,0,255,0.07) 35%,
+    transparent 65%
+  );
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  min-width: 240px;
+  padding: 1.1rem 2.8rem;
+  background: linear-gradient(135deg, #ffe066, #b000ff);
+  color: black;
+  border: none;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.35em;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.btn:hover { 
+  transform: scale(1.06); 
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.1);
+  color: #ffffff;
+  border: 3px solid rgba(180,80,255,1);
+  text-shadow: 0 0 8px rgba(255,255,255,0.4);
+  box-shadow: 0 0 8px rgba(180,80,255,0.4);
+}
+
+/* ===== DONATE ===== */
+.donate-wrap {
+  position: fixed;
+  bottom: 32px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 6;
+}
+
+.donate-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(180,80,255,0.45);
+  backdrop-filter: blur(10px);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  font-weight: 800;
+  transition: transform 0.3s ease;
+}
+
+.donate-btn:hover { 
+  transform: scale(1.06); 
+}
+
+/* ===== UNIFIED PAGE TITLE (same size across all pages) ===== */
+.page-title {
+  font-size: 5.5rem;
+  font-weight: 900;
+  letter-spacing: 0.3em;
+  background: linear-gradient(135deg, #ffe066, #b000ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: transform 0.3s ease;
+  cursor: default;
+}
+
+.page-title:hover {
+  transform: scale(1.08);
+}
+
+/* ===== UPDATES LAYOUT ===== */
+.updates-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: min(1200px, 92vw);
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+  margin: 0 auto;
+}
+
+/* THIS IS THE KEY FIX - FORCE TOP SECTION TO LEFT */
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  gap: 2rem;
+  margin-top: 2rem;
+  align-self: flex-start !important;
+}
+
+.content-title {
+  font-size: 5.5rem;
+  font-weight: 900;
+  letter-spacing: 0.3em;
+  background: linear-gradient(135deg, #ffe066, #b000ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  flex-shrink: 0;
+}
+
+.right-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-self: flex-start;
+  flex-shrink: 0;
+}
+
+.nav-box-small {
+  min-width: 170px;
+  padding: 1rem 1.6rem;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.08);
+  border: 2px solid rgba(180,80,255,0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 0.25em;
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.nav-box-small:hover {
+  transform: scale(1.05) translateY(-5px);
+  border-color: rgba(255,220,120,0.6);
+  box-shadow: 0 10px 50px rgba(180,80,255,0.5);
+  background: rgba(255,255,255,0.12);
+}
+
+.videos-section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  width: 100%;
+  margin-top: -0.5rem;
+  max-width: 900px;
+}
+
+.videos-section .video-card {
+  width: 100%;
+  max-width: 100%;
+}
+
+.videos-section .caption {
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.email-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding-bottom: 5.5rem;
+  margin-top: 0.5rem;
+}
+
+/* ===== FORM ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+form input {
+  width: 300px;
+  max-width: 85vw;
+  padding: 0.9rem;
+  border-radius: 999px;
+  border: 2px solid rgba(180,80,255,0.85);
+  background: rgba(0,0,0,0.45);
+  color: white;
+  text-align: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
+
+form input::placeholder {
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.15em;
+}
+
+.form-success {
+  display: none;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  opacity: 0.85;
+}
+
+.form-error {
+  display: none;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  color: #ffe066;
+  text-shadow: 0 0 12px rgba(255,224,102,0.7);
+  text-align: center;
+}
+
+form input.invalid {
+  border-color: #ffe066;
+  box-shadow: 0 0 14px rgba(255,224,102,0.45);
+}
+
+.merch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+.merch-feature {
+  padding: 1.6rem;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(180,80,255,0.3);
+  transition: all 0.3s ease;
+}
+
+.merch-feature:hover { 
+  transform: scale(1.03) translateY(-5px);
+  border-color: rgba(255,220,120,0.6);
+  box-shadow: 0 10px 40px rgba(180,80,255,0.4);
+}
+
+.merch-img {
+  width: 100%;
+  border-radius: 14px;
+  margin-bottom: 1.2rem;
+}
+
+.merch-title {
+  text-align: center;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+}
+
+/* ===== MERCH PAGE ===== */
+.merch-feature:hover { 
+  transform: scale(1.03) translateY(-5px);
+  border-color: rgba(255,220,120,0.6) !important;
+  box-shadow: 0 10px 40px rgba(180,80,255,0.4);
+}
+
+/* ===== VIDEO CARDS (used on both content and updates screens) ===== */
+.video-card {
+  width: 100%;
+  max-width: 500px;
+}
+
+.video-card a {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-card img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 14px;
+}
+
+.video-card a:hover {
+  transform: scale(1.04);
+  box-shadow: 0 10px 40px rgba(180,80,255,0.45);
+}
+
+.caption {
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* ===== CREDITS CARDS - ALL 5 IN ONE ROW ===== */
+.credits-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  width: 100%;
+  max-width: 1100px;
+  justify-content: center;
+}
+
+/* ===== FLIP CARD EFFECT ===== */
+.bio-card {
+  width: 160px;
+  height: 185px;
+  perspective: 1000px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  overflow: visible;
+  transition: transform 0.3s ease;
+}
+
+.bio-card:hover {
+  transform: scale(1.07);
+}
+
+.bio-card-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-origin: center center;
+  -webkit-perspective: 1000px;
+}
+
+.bio-card.flipped .bio-card-inner {
+  transform: rotateY(180deg);
+}
+
+.bio-card-front {
+  transform: rotateY(0deg);
+}
+
+.bio-card-front,
+.bio-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.08);
+  border: 2px solid rgba(180,80,255,0.3);
+  backdrop-filter: blur(10px);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.bio-card:hover .bio-card-front,
+.bio-card:hover .bio-card-back {
+  box-shadow: 0 8px 35px rgba(180,80,255,0.5);
+}
+
+.bio-card:not(.flipped):hover .bio-card-front {
+  border-color: rgba(255,220,120,0.6);
+}
+
+.bio-card-back {
+  transform: rotateY(180deg);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+  line-height: 1.4;
+  padding: 0.8rem;
+  word-wrap: break-word;
+  overflow-y: auto;
+  overflow-x: hidden;
+  justify-content: flex-start;
+  -webkit-overflow-scrolling: touch;
+  font-style: italic;
+}
+
+#amnerCard .bio-photo {
+  object-position: center 60%;
+}
+
+.bio-photo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,220,120,0.5);
+  box-shadow: 0 0 20px rgba(200,120,255,0.7);
+  overflow: hidden;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  transform: translateZ(0);
+  flex-shrink: 0;
+}
+
+.bio-name {
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.bio-pronouns {
+  font-size: 0.42rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+  opacity: 0.65;
+  font-style: italic;
+}
+
+.bio-role {
+  font-size: 0.5rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+  opacity: 0.85;
+  line-height: 1.4;
+}
+
+/* ===== DONATORS LIST ===== */
+.donators-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.donator-name {
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(180,80,255,0.35);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.donator-name:hover {
+  border-color: rgba(255,220,120,0.5);
+  box-shadow: 0 4px 20px rgba(180,80,255,0.4);
+  transform: translateY(-2px);
+}
+
+/* ===== FOOTER DISCLAIMER ===== */
+.site-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.45rem;
+  letter-spacing: 0.12em;
+  opacity: 0.45;
+  padding: 0.5rem 1rem;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.donate-footer-mobile {
+  display: none;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 900px) {
+  body { overflow-y: auto; overflow-x: hidden; overscroll-behavior-y: none; }
+  .screen {
+    position: relative;
+    min-height: var(--real-vh, 100svh);
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  #home {
+    overflow-y: auto;
+    padding-bottom: 90px;
+    box-sizing: border-box;
+  }
+  .screen:not(.active) { display: none; }
+  .water-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .donate-wrap { display: none; }
+
+  .credits-cards-container {
+    display: grid;
+    grid-template-columns: repeat(2, 160px);
+    gap: 1.5rem;
+    justify-content: center;
+  }
+
+  .donate-btn {
+    font-size: 0.55rem;
+    padding: 0.5rem 1rem;
+    gap: 6px;
+  }
+
+  .site-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.8rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .donate-footer-mobile {
+    display: inline-flex;
+    position: static;
+  }
+  
+  .updates-container {
+    width: 100%;
+    max-width: 100%;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    box-sizing: border-box;
+    gap: 2rem;
+  }
+  
+  .top-section {
+    flex-direction: row;
+    align-items: flex-start !important;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+  .content-title {
+    font-size: 2.5rem;
+    letter-spacing: 0.15em;
+    padding: 0;
+    flex-shrink: 1;
+  }
+  .right-buttons {
+    flex-direction: column;
+    gap: 0.45rem;
+    align-items: flex-end;
+    flex-shrink: 0;
+  }
+  .nav-box-small {
+    min-width: unset;
+    width: auto;
+    height: auto;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.6rem;
+    border-radius: 10px;
+    letter-spacing: 0.18em;
+    border-width: 1.5px;
+  }
+  .videos-section {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 0;
+  }
+  
+  .email-section {
+    gap: 1.5rem;
+    padding-bottom: 8rem;
+  }
+  
+  .merch-grid { 
+    grid-template-columns: 1fr; 
+  }
+  
+  .bio-card {
+    width: 160px;
+    height: 210px;
+  }
+  .credits-cards-container .bio-card-front,
+  .credits-cards-container .bio-card-back {
+    justify-content: flex-start !important;
+  }
+  
+  .credits-cards-container {
+    justify-content: center;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="water-layer" id="waterLayer">
+  <video id="waterVideo" src="water.mp4" autoplay muted loop playsinline webkit-playsinline x-webkit-airplay="deny" disablepictureinpicture></video>
+</div>
+
+<div class="edge"></div>
+<div id="cryptoField"></div>
+
+<div class="donate-wrap">
+  <a class="donate-btn" href="https://donorbox.org/wiz-rd-shit?" target="_blank">
+    <img src="https://donorbox.org/images/white_logo.svg" height="14" alt="Donorbox"> DONATE
+  </a>
+</div>
+
+<!-- HOME SCREEN -->
+<div class="screen active" id="home">
+  <div class="home-stack">
+    <div class="logo-wrap">
+      <img src="wizshtlogo_trans.png" class="logo" id="logo" alt="Wizard Shit Logo">
+    </div>
+    <button class="btn" id="enterBtn">ENTER</button>
+  </div>
+</div>
+
+<!-- UPDATES SCREEN -->
+<div class="screen" id="updates" style="align-items: flex-start; justify-content: flex-start; overflow-y: auto;">
+  <div class="updates-container" style="padding-top: 0;">
+    
+    <div class="top-section" style="margin-top: 2rem;">
+      <div class="content-title">CONTENT</div>
+      <div class="right-buttons">
+        <div class="nav-box-small" id="merchBtn">MERCH</div>
+        <div class="nav-box-small" id="creditsBtn">CREDITS</div>
+      </div>
+    </div>
+
+    <div class="videos-section">
+      <div class="video-card">
+        <a href="https://www.youtube.com/watch?v=H6cNCTofnrs" target="_blank">
+          <img src="https://img.youtube.com/vi/H6cNCTofnrs/hqdefault.jpg" alt="Christmas In Wizard City">
+        </a>
+        <div class="caption">Christmas In Wizard City</div>
+      </div>
+
+      <div class="video-card">
+        <a href="https://www.youtube.com/watch?v=A2TZgaXa49w" target="_blank">
+          <img src="https://img.youtube.com/vi/A2TZgaXa49w/hqdefault.jpg" alt="Animatic">
+        </a>
+        <div class="caption">Animatic</div>
+      </div>
+    </div>
+
+    <div class="email-section">
+      <form id="emailForm" novalidate>
+        <input id="emailInput" type="email" name="email" placeholder="EMAIL FOR UPDATES">
+        <div class="form-error" id="emailError">PLEASE ENTER A VALID EMAIL</div>
+        <button class="btn" type="submit">SUBMIT</button>
+      </form>
+
+      <div class="form-success" id="formSuccess">SUBSCRIBED ✨</div>
+
+      <button class="btn btn-secondary" id="backBtn">BACK</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- MERCH SCREEN -->
+<div class="screen" id="merch" style="align-items: flex-start; justify-content: flex-start; overflow-y: auto;">
+  <div class="updates-container" style="padding-top: 0;">
+    
+    <div class="top-section" style="margin-top: 2rem;">
+      <div class="content-title">MERCH</div>
+      <div class="right-buttons">
+        <div class="nav-box-small" id="merchToContentBtn">CONTENT</div>
+        <div class="nav-box-small" id="merchToCreditsBtn">CREDITS</div>
+      </div>
+    </div>
+    
+    <div class="videos-section" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); max-width: 900px;">
+      <a class="merch-feature" href="https://wizard.printful.me/product/unisex-hoodie" target="_blank" style="padding: 1.6rem; border-radius: 18px; background: rgba(255,255,255,0.08); border: 1px solid rgba(180,80,255,0.3); transition: all 0.3s ease; display: flex; flex-direction: column;">
+        <div style="height: 320px; border-radius: 14px; margin-bottom: 1.2rem; background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+          <img src="hoodie-front.png" style="width: 100%; height: 100%; object-fit: contain; display: block;" alt="Earl Crouch Hoodie">
+        </div>
+        <div style="text-align: center; font-weight: 900; letter-spacing: 0.15em;">EARL CROUCH HOODIE</div>
+      </a>
+
+      <a class="merch-feature" href="https://wizard.printful.me/product/hoodie" target="_blank" style="padding: 1.6rem; border-radius: 18px; background: rgba(255,255,255,0.08); border: 1px solid rgba(180,80,255,0.3); transition: all 0.3s ease; display: flex; flex-direction: column;">
+        <div style="height: 320px; border-radius: 14px; margin-bottom: 1.2rem; background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+          <img src="hoodie-2.png" style="width: 100%; height: 100%; object-fit: contain; display: block;" alt="Pass the Hoodie">
+        </div>
+        <div style="text-align: center; font-weight: 900; letter-spacing: 0.15em;">PASS THE HOODIE</div>
+      </a>
+    </div>
+
+    <div class="email-section" style="margin-top: 3rem;">
+      <button class="btn btn-secondary" id="backFromMerchBtn">BACK</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- DONATORS SCREEN -->
+<div class="screen" id="donators" style="align-items: flex-start; justify-content: flex-start; overflow-y: auto;">
+  <div class="updates-container" style="padding-top: 0; display: flex; flex-direction: column; min-height: 100%;">
+
+    <div class="top-section" style="margin-top: 2rem;">
+      <div class="content-title">DONATORS</div>
+    </div>
+
+    <div class="donators-list" id="donatorsList">
+      <div class="donator-name">chuppa</div>
+      <div class="donator-name">rick jameson</div>
+      <div class="donator-name">HeXaGo</div>
+      <div class="donator-name">eba</div>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: auto; padding-bottom: 7rem;">
+      <div class="nav-box-small" id="donatorsToHomeBtn">HOME</div>
+      <div class="nav-box-small" id="donatorsToContentBtn">CONTENT</div>
+      <div class="nav-box-small" id="donatorsToMerchBtn">MERCH</div>
+      <div class="nav-box-small" id="donatorsToCreditsBtn">CREDITS</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONTENT SCREEN -->
+<div class="screen" id="content">
+  <div class="content-container">
+    <div class="page-title">CONTENT</div>
+    
+    <div class="video-card">
+      <a href="https://www.youtube.com/watch?v=H6cNCTofnrs" target="_blank">
+        <img src="https://img.youtube.com/vi/H6cNCTofnrs/hqdefault.jpg" alt="Christmas In Wizard City">
+      </a>
+      <div class="caption">Christmas In Wizard City</div>
+    </div>
+
+    <button class="btn btn-secondary" id="backFromContentBtn">BACK</button>
+  </div>
+</div>
+
+<!-- CREDITS SCREEN - ONLY CHANGE: Added align-items: flex-start; justify-content: flex-start; overflow-y: auto; -->
+<div class="screen" id="credits" style="align-items: flex-start; justify-content: flex-start; overflow-y: auto;">
+  <div class="updates-container" style="padding-top: 0;">
+    
+    <div class="top-section" style="margin-top: 2rem;">
+      <div class="content-title">CREDITS</div>
+      <div class="right-buttons">
+        <div class="nav-box-small" id="donatorsBtn">DONATORS</div>
+      </div>
+    </div>
+    
+    <div class="credits-cards-container">
+      
+      <div class="bio-card">
+        <div class="bio-card-inner">
+          <div class="bio-card-front">
+            <img src="wiz.PNG" alt="Wizzy" class="bio-photo" style="object-position: center 70%; object-fit: cover;">
+            <div class="bio-name">Ella Imhof</div>
+            <div class="bio-role">Producer<br>Director</div>
+          </div>
+          <div class="bio-card-back">
+            <p>Ella (Wizzy) is the backbone of MadamStudio. Wizzy has spent countless hours planning, blueprinting, and assembling this team. Wiz@rdShit is bound to do great things, and if anyone deserves the credit it's Wiz. Wizzy has cultivated a space where everyone can have fun through comedy, art, music, harm reduction / drug education, love, hate, magic and whatever else you might find in WizardCity.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-card-inner">
+          <div class="bio-card-front">
+            <img src="Emmz.jpeg" alt="Emman Paraiso" class="bio-photo" style="object-position: center 20%;">
+            <div class="bio-name">Emman Paraiso</div>
+            <div class="bio-role">Clean & Coloring<br>2D Animation<br>Character Art</div>
+          </div>
+          <div class="bio-card-back">
+            <p>Emman has proven himself to be more than just a crucial part of the WizardShit team. Emmz has helped develop aesthetics sculpting the heart of WizardCity. Emmz is a versatile artist who never falls short of his goals. Emmz produces high quality work in all corners of the animation.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-card-inner">
+          <div class="bio-card-front">
+            <img src="Untitled167_20250322190806.png" alt="Pau Medrano" class="bio-photo">
+            <div class="bio-name">Pau Medrano</div>
+            <div class="bio-role">Background Artist</div>
+          </div>
+          <div class="bio-card-back">
+            <div class="bio-name">Pau Medrano</div>
+            <p style="font-style: italic;">"This is the start of something great"</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-card" id="amnerCard">
+        <div class="bio-card-inner">
+          <div class="bio-card-front">
+            <img src="IMG_1882.png" alt="Amner Rosales Jr" class="bio-photo">
+            <div class="bio-name">Amner Rosales Jr</div>
+            <div class="bio-role">Voice Actor<br>Gnoe King & Knome Gang</div>
+          </div>
+          <div class="bio-card-back">
+            <div class="bio-name">Amner Rosales Jr</div>
+            <p style="font-style: italic;">"wweehh yeah we got Shiz to Smoke. Hope you Chicos and Chicas enjoy the show"</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-card-inner">
+          <div class="bio-card-front">
+            <img src="IMG_3165_-_Edited.jpg" alt="Sheamus Aaren" class="bio-photo">
+            <div class="bio-name">Sheamus Aaren</div>
+            <div class="bio-role">Background Artist<br>Concept Artist</div>
+          </div>
+          <div class="bio-card-back">
+            <p>What is a story without a scene? And what is a scene without a background? Sheamus has put in hard work for MadamStudio, constructing the atmosphere for Wizard City, as well as making significant contributions to Wiz@rdShit's concept art.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-card-inner">
+          <div class="bio-card-front">
+            <div class="bio-photo" style="background-image: url('IMG_2290.jpeg'); background-size: 120%; background-position: center 25%;"></div>
+            <div class="bio-name">Robert Stewart</div>
+            <div class="bio-role">Audio<br>Web</div>
+          </div>
+          <div class="bio-card-back">
+            <div class="bio-name">Robert Stewart</div>
+            <p style="font-style: italic;">"This is my favorite TV show."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-card" id="finnCard">
+        <div class="bio-card-inner">
+          <div class="bio-card-front">
+            <img src="Infinnity.jpg" alt="Finn Pearson" class="bio-photo">
+            <div class="bio-name">Finn Pearson</div>
+            <div class="bio-role">Voice Actor<br>Earl</div>
+          </div>
+          <div class="bio-card-back">
+            <div class="bio-name">Finn Pearson</div>
+            <p style="font-style: italic;">"I had a blast recording the lines for Earl and can't wait for you to see what the entire team has been working their magic on. Squalala!"</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-card-inner">
+          <div class="bio-card-front">
+            <img src="Charbuz.png" alt="Charbuz" class="bio-photo">
+            <div class="bio-name">Charbuz</div>
+            <div class="bio-role">Writer<br>Mentee Animator</div>
+          </div>
+          <div class="bio-card-back">
+            <p>Charbuz is a writer and mentee animator for Wiz@rdShit. Charbuz is excellent at what they do and MadamStudio is grateful to have amazing partners like Charbuz.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-card-inner">
+          <div class="bio-card-front">
+            <img src="sapphic_shroom_icon.png" alt="Sapphic Shroom" class="bio-photo">
+            <div class="bio-name">Sapphic Shroom</div>
+            <div class="bio-role">2D Animation<br>Animatic Editor</div>
+          </div>
+          <div class="bio-card-back">
+            <p>The credits wouldn't be complete without Sapphic Shroom. They have worked and supported the development of Wiz@rdShit from the concept art to the pilot. Thank you Sapphic Shroom for all your amazing work.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-card-inner">
+          <div class="bio-card-front">
+            <img src="Tiffany.webp" alt="Tiffany Liu Veprinski" class="bio-photo">
+            <div class="bio-name">Tiffany Liu Veprinski</div>
+            <div class="bio-role">Voice Actor<br>Wish Fish</div>
+          </div>
+          <div class="bio-card-back">
+            <p>Wish Fish is a important character in WizardCity. With WF, the magic in the room is unparalleled and there's no one who could have done it like Tiffany. MadamStudio is always excited to have Tiffany on the team.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-card-inner">
+          <div class="bio-card-front">
+            <img src="anne_nicole.png.png" alt="Ann Nicole" class="bio-photo">
+            <div class="bio-name">Ann Nicole</div>
+            <div class="bio-role">2D Animation<br>Effects<br>Animatic Artist</div>
+          </div>
+          <div class="bio-card-back">
+            <p>Anne was originally working on the transitions and effects for Wiz@rdShit, and eventually committed their time to the completion of the animatic. Anne is the newest member of MadamStudio, and we are all honored to have them in the studio.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-card" id="mohanadCard">
+        <div class="bio-card-inner">
+          <div class="bio-card-front">
+            <div class="bio-photo" style="background-image: url('IMG_20260326_063725.PNG'); background-size: 220%; background-position: center 5%;"></div>
+            <div class="bio-name">Mohanad Ahmed</div>
+            <div class="bio-role">2D Animator</div>
+          </div>
+          <div class="bio-card-back">
+            <div class="bio-name">Mohanad Ahmed</div>
+            <p style="font-style: italic;">"I enjoy animating characters that gives evil vibes"</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-card-inner">
+          <div class="bio-card-front">
+            <div class="bio-photo" style="background-image: url('IMG_2293.jpeg'); background-size: 170%; background-position: 65% center;"></div>
+            <div class="bio-name">Rowan Ashmore</div>
+            <div class="bio-role">Storyboarding<br>Character Design</div>
+          </div>
+          <div class="bio-card-back">
+            <p>Rowan has been a crucial contributor to the storyboard and character design process. She has always been an important, reliable part of the team from day one. Rowan has worked side by side with the director of MadamStudio, helping carry the magic of Wizard City all the way to the finish line.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-card" id="severalGoblinsCard">
+        <div class="bio-card-inner">
+          <div class="bio-card-front">
+            <img src="Several Goblins.png" alt="Several Goblins" class="bio-photo">
+            <div class="bio-name">Several Goblins</div>
+            <div class="bio-role">Voice Actor<br>Helping Hand</div>
+          </div>
+          <div class="bio-card-back">
+            <div class="bio-name">Several Goblins</div>
+            <p style="font-style: italic;">"Consume brand I am associated with."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-card" id="wrathewCard">
+        <div class="bio-card-inner">
+          <div class="bio-card-front">
+            <div class="bio-photo" style="background-image: url('wrathew.PNG'); background-size: 130%; background-position: center 40%;"></div>
+            <div class="bio-name">Wrathew</div>
+            <div class="bio-role">Rat</div>
+          </div>
+          <div class="bio-card-back">
+            <div class="bio-name">Wrathew</div>
+            <p style="font-style: italic;">"squeak squeak squeak squeak squaek"</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="email-section" style="margin-top: 16rem;">
+      <button class="btn btn-secondary" id="backFromCreditsBtn">BACK</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+document.body.classList.add(isMobile ? "mobile" : "desktop");
+
+// Set real viewport height for correct mobile centering
+function setRealVH() {
+  document.documentElement.style.setProperty('--real-vh', window.innerHeight + 'px');
+}
+setRealVH();
+window.addEventListener('resize', setRealVH);
+
+// Allow bio card backs to scroll on iOS without scrolling the page
+document.querySelectorAll('.bio-card-back').forEach(function(el) {
+  el.addEventListener('touchmove', function(e) {
+    e.stopPropagation();
+  }, { passive: true });
+});
+
+const home = document.getElementById("home");
+const updates = document.getElementById("updates");
+const merch = document.getElementById("merch");
+const content = document.getElementById("content");
+const credits = document.getElementById("credits");
+const donators = document.getElementById("donators");
+
+const enterBtn = document.getElementById("enterBtn");
+const backBtn = document.getElementById("backBtn");
+const merchBtn = document.getElementById("merchBtn");
+const creditsBtn = document.getElementById("creditsBtn");
+const backFromMerchBtn = document.getElementById("backFromMerchBtn");
+const backFromContentBtn = document.getElementById("backFromContentBtn");
+const backFromCreditsBtn = document.getElementById("backFromCreditsBtn");
+const donatorsBtn = document.getElementById("donatorsBtn");
+const backFromDonatorsBtn = document.getElementById("backFromDonatorsBtn");
+
+const cryptoField = document.getElementById("cryptoField");
+const emailInput = document.getElementById("emailInput");
+const waterLayer = document.getElementById("waterLayer");
+const waterVideo = document.getElementById("waterVideo");
+const form = document.getElementById("emailForm");
+const successMsg = document.getElementById("formSuccess");
+const emailError = document.getElementById("emailError");
+
+waterVideo.playbackRate = 0.55;
+
+// Force-start on load (needed on iOS where autoplay may not fire)
+function startBgVideo() {
+  waterVideo.play().then(() => {
+    waterVideo.playbackRate = 0.55;
+  }).catch(() => {});
+}
+window.addEventListener('load', startBgVideo);
+document.addEventListener('touchstart', startBgVideo, { once: true });
+
+// iOS Safari can pause the video on scroll or background — keep it playing
+waterVideo.addEventListener("pause", () => {
+  if (!document.hidden) waterVideo.play().catch(() => {});
+});
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && waterLayer.style.opacity !== "0") {
+    waterVideo.play().catch(() => {});
+  }
+});
+
+const SCREENS = { home, updates, merch, content, credits, donators };
+
+// Restore path after 404.html redirect (e.g. /?p=credits)
+(function() {
+  const params = new URLSearchParams(location.search);
+  const p = params.get('p');
+  if (p) history.replaceState(null, '', '/' + p);
+})();
+
+function showScreen(screenToShow, pushState = true) {
+  [home, updates, merch, content, credits, donators].forEach(s => s.classList.remove("active"));
+  screenToShow.classList.add("active");
+  const mobileActive = window.matchMedia('(max-width: 900px)').matches;
+  waterLayer.style.opacity = screenToShow === home ? 0 : (mobileActive ? 0.5 : 1);
+  if (pushState) {
+    const id = screenToShow.id;
+    history.pushState(null, '', id === 'home' ? '/' : '/' + id);
+  }
+  // Always reset the email form when navigating to updates
+  if (screenToShow === updates) {
+    form.reset();
+    successMsg.style.display = "none";
+    emailError.style.display = "none";
+    emailInput.classList.remove("invalid");
+  }
+}
+
+window.addEventListener('popstate', () => {
+  const id = location.pathname.replace(/^\//, '');
+  const screen = SCREENS[id] || home;
+  if (screen === home) cryptoField.innerHTML = "";
+  showScreen(screen, false);
+});
+
+// Restore screen from URL on load
+(function() {
+  const id = location.pathname.replace(/^\//, '');
+  const screen = SCREENS[id] || home;
+  showScreen(screen, false);
+})();
+
+const logo = document.getElementById("logo");
+const isMobileDevice = () => window.matchMedia("(max-width: 900px)").matches;
+
+const logoWrap = logo.parentElement;
+
+logo.addEventListener("click", () => {
+  logoWrap.classList.remove("logo-trip");
+  void logoWrap.offsetWidth;
+  logoWrap.classList.add("logo-trip");
+
+  const rect = logo.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+
+  // 1 ripple on mobile, 3 on desktop
+  const rippleTimes = isMobileDevice() ? [0] : [0, 200, 420];
+  rippleTimes.forEach((delay, i) => {
+    setTimeout(() => {
+      const r = document.createElement("div");
+      r.className = "trip-ripple";
+      r.style.left = cx + "px";
+      r.style.top = cy + "px";
+      r.style.setProperty("--ripple-dur", (1.3 + i * 0.25) + "s");
+      r.style.setProperty("--ripple-start", (i * 50) + "deg");
+      document.body.appendChild(r);
+      r.addEventListener("animationend", () => r.remove(), { once: true });
+    }, delay);
+  });
+
+  // Bloom only on desktop
+  if (!isMobileDevice()) {
+    const bloom = document.createElement("div");
+    bloom.className = "trip-bloom";
+    bloom.style.setProperty("--bx", ((cx / window.innerWidth) * 100) + "%");
+    bloom.style.setProperty("--by", ((cy / window.innerHeight) * 100) + "%");
+    document.body.appendChild(bloom);
+    bloom.addEventListener("animationend", () => bloom.remove(), { once: true });
+  }
+});
+
+enterBtn.onclick = () => showScreen(updates);
+
+backBtn.onclick = () => {
+  cryptoField.innerHTML = "";
+  showScreen(home);
+};
+
+merchBtn.onclick = () => showScreen(merch);
+creditsBtn.onclick = () => showScreen(credits);
+
+backFromMerchBtn.onclick = () => showScreen(updates);
+backFromContentBtn.onclick = () => showScreen(updates);
+backFromCreditsBtn.onclick = () => showScreen(updates);
+donatorsBtn.onclick = () => showScreen(donators);
+
+document.getElementById("merchToContentBtn").onclick = () => showScreen(updates);
+document.getElementById("merchToCreditsBtn").onclick = () => showScreen(credits);
+
+document.getElementById("donatorsToHomeBtn").onclick = () => { cryptoField.innerHTML = ""; showScreen(home); };
+document.getElementById("donatorsToContentBtn").onclick = () => showScreen(updates);
+document.getElementById("donatorsToMerchBtn").onclick = () => showScreen(merch);
+document.getElementById("donatorsToCreditsBtn").onclick = () => showScreen(credits);
+
+/* Flip card functionality — only cards with a back panel */
+const bioCards = document.querySelectorAll('.bio-card');
+bioCards.forEach(card => {
+  if (!card.querySelector('.bio-card-back')) {
+    card.style.cursor = 'default';
+    return;
+  }
+  card.addEventListener('click', function() {
+    this.classList.toggle('flipped');
+  });
+});
+
+/* Formspree AJAX submit */
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+
+  if (!emailInput.validity.valid) {
+    emailInput.classList.add("invalid");
+    emailError.style.display = "block";
+    return;
+  }
+
+  emailInput.classList.remove("invalid");
+  emailError.style.display = "none";
+
+  const data = new FormData(form);
+
+  const res = await fetch("https://formspree.io/f/mrelgwzp", {
+    method: "POST",
+    body: data,
+    headers: { "Accept": "application/json" }
+  });
+
+  if (res.status === 200 || res.status === 201) {
+    form.reset();
+    successMsg.style.display = "block";
+    setTimeout(() => { successMsg.style.display = "none"; }, 3000);
+  }
+});
+
+emailInput.addEventListener("input", () => {
+  if (emailInput.validity.valid) {
+    emailInput.classList.remove("invalid");
+    emailError.style.display = "none";
+  }
+});
+
+/* crypto letters */
+emailInput.addEventListener("keydown", e => {
+  if (e.key.length !== 1 || !/[a-zA-Z@._-]/.test(e.key)) return;
+  if (cryptoField.children.length > 18) return;
+
+  for (let i = 0; i < 3; i++) {
+    const el = document.createElement("div");
+    el.className = "crypto";
+    el.textContent = e.key.toUpperCase();
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.top = Math.random() * 100 + "vh";
+    el.style.fontSize = Math.random() * 18 + 10 + "vw";
+    cryptoField.appendChild(el);
+    setTimeout(() => el.remove(), 6000);
+  }
+});
+
+if (window.innerWidth <= 900) {
+  const amnerPhoto = document.querySelector('#amnerCard .bio-photo');
+  if (amnerPhoto) amnerPhoto.style.objectPosition = 'center 48%';
+}
+</script>
+
+<footer class="site-footer">
+  <a class="donate-btn donate-footer-mobile" href="https://donorbox.org/wiz-rd-shit?" target="_blank">
+    <img src="https://donorbox.org/images/white_logo.svg" height="12" alt="Donorbox"> DONATE
+  </a>
+  © Madam Studio — All Rights Reserved · NFP (Not For Profit)
+</footer>
+
+<script>
+(function() {
+  const LOCK = 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no';
+  const meta = document.querySelector('meta[name=viewport]');
+
+  // Force zoom reset on every load (fixes browser-persisted zoom state)
+  meta.setAttribute('content', LOCK);
+
+  // Reset if VisualViewport reports a non-1 scale (e.g. after refresh while zoomed)
+  if (window.visualViewport) {
+    function resetZoom() {
+      if (Math.round(window.visualViewport.scale * 100) !== 100) {
+        meta.setAttribute('content', LOCK);
+      }
+    }
+    window.visualViewport.addEventListener('resize', resetZoom);
+    resetZoom();
+  }
+
+  // Block all gesture-based zoom (Safari + Chrome iOS)
+  ['gesturestart','gesturechange','gestureend'].forEach(function(evt) {
+    document.addEventListener(evt, function(e) { e.preventDefault(); }, { passive: false });
+  });
+  document.addEventListener('touchstart', function(e) { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
+  document.addEventListener('touchmove',  function(e) { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
+
+  // Block double-tap zoom
+  var lastTap = 0;
+  document.addEventListener('touchend', function(e) {
+    var now = Date.now();
+    if (now - lastTap < 300) e.preventDefault();
+    lastTap = now;
+  }, { passive: false });
+})();
+</script>
+</body>
+</html>

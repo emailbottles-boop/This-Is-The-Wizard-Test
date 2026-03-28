@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+  var page = window.location.pathname.replace(/^\//, '').replace(/\/$/, '');
+  window.location.replace('/?p=' + encodeURIComponent(page));
+</script>
+</head>
+</html>
