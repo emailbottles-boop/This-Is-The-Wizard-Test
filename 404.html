@@ -2,8 +2,12 @@
 <html>
 <head>
 <script>
-  var page = window.location.pathname.replace(/^\//, '').replace(/\/$/, '');
-  window.location.replace('/?p=' + encodeURIComponent(page));
+  var path = window.location.pathname;
+  var base = '/This-Is-The-Wizard-Test';
+  var screen = path.indexOf(base) === 0
+    ? path.slice(base.length).replace(/^\//, '').replace(/\/$/, '')
+    : path.replace(/^\//, '').replace(/\/$/, '');
+  window.location.replace(base + '/site.html?p=' + encodeURIComponent(screen));
 </script>
 </head>
 </html>
