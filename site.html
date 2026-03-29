@@ -1408,6 +1408,7 @@ document.getElementById("donatorsToCreditsBtn").onclick = () => showScreen(credi
 
 /* Flip card functionality — only cards with a back panel */
 const bioCards = document.querySelectorAll('.bio-card');
+let goblinFlipCount = 0;
 bioCards.forEach(card => {
   if (!card.querySelector('.bio-card-back')) {
     card.style.cursor = 'default';
@@ -1418,18 +1419,17 @@ bioCards.forEach(card => {
     const wasFlipped = this.classList.contains('flipped');
 
     if (isGoblin) {
-      const count = parseInt(this.dataset.flipCount || '0');
       if (!wasFlipped) {
-        // Flipping to back
+        // Flipping to back — update content if needed
         const back = this.querySelector('.bio-card-back');
-        if (count === 1) {
-          back.innerHTML = '<img src="Pot Of Greed.PNG" alt="Pot Of Greed" style="width:100%;height:100%;object-fit:contain;">';
-        } else if (count === 2) {
-          back.innerHTML = '<img src="Uno.PNG" alt="Uno" style="width:100%;height:100%;object-fit:contain;">';
+        if (goblinFlipCount === 1) {
+          back.innerHTML = '<img src="Pot Of Greed.PNG" alt="Pot Of Greed" style="max-width:100%;max-height:100%;object-fit:contain;">';
+        } else if (goblinFlipCount === 2) {
+          back.innerHTML = '<img src="Uno.PNG" alt="Uno" style="max-width:100%;max-height:100%;object-fit:contain;">';
         }
       } else {
         // Flipping back to front — increment counter
-        this.dataset.flipCount = count + 1;
+        goblinFlipCount++;
       }
     }
 
