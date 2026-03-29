@@ -1417,15 +1417,20 @@ bioCards.forEach(card => {
     const isGoblin = this.id === 'severalGoblinsCard';
     const wasFlipped = this.classList.contains('flipped');
 
-    if (isGoblin && !wasFlipped && this.dataset.seenBack === 'true') {
-      // Second time flipping to back — show Pot Of Greed
-      const back = this.querySelector('.bio-card-back');
-      back.innerHTML = '<img src="Pot Of Greed.PNG" alt="Pot Of Greed" style="width:100%;height:100%;object-fit:contain;">';
-    }
-
-    if (isGoblin && wasFlipped) {
-      // Card is being flipped back to front — mark as seen
-      this.dataset.seenBack = 'true';
+    if (isGoblin) {
+      const count = parseInt(this.dataset.flipCount || '0');
+      if (!wasFlipped) {
+        // Flipping to back
+        const back = this.querySelector('.bio-card-back');
+        if (count === 1) {
+          back.innerHTML = '<img src="Pot Of Greed.PNG" alt="Pot Of Greed" style="width:100%;height:100%;object-fit:contain;">';
+        } else if (count === 2) {
+          back.innerHTML = '<img src="Uno.PNG" alt="Uno" style="width:100%;height:100%;object-fit:contain;">';
+        }
+      } else {
+        // Flipping back to front — increment counter
+        this.dataset.flipCount = count + 1;
+      }
     }
 
     this.classList.toggle('flipped');
