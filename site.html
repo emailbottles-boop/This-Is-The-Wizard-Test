@@ -1408,12 +1408,31 @@ document.getElementById("donatorsToCreditsBtn").onclick = () => showScreen(credi
 
 /* Flip card functionality — only cards with a back panel */
 const bioCards = document.querySelectorAll('.bio-card');
+let goblinFlipCount = 0;
 bioCards.forEach(card => {
   if (!card.querySelector('.bio-card-back')) {
     card.style.cursor = 'default';
     return;
   }
   card.addEventListener('click', function() {
+    const isGoblin = this.id === 'severalGoblinsCard';
+    const wasFlipped = this.classList.contains('flipped');
+
+    if (isGoblin) {
+      if (!wasFlipped) {
+        // Flipping to back — update content if needed
+        const back = this.querySelector('.bio-card-back');
+        if (goblinFlipCount === 1) {
+          back.innerHTML = '<img src="Pot Of Greed.PNG" alt="Pot Of Greed" style="max-width:100%;max-height:100%;object-fit:contain;">';
+        } else if (goblinFlipCount === 2) {
+          back.innerHTML = '<img src="Uno.PNG" alt="Uno" style="max-width:100%;max-height:100%;object-fit:contain;">';
+        }
+      } else {
+        // Flipping back to front — increment counter
+        goblinFlipCount++;
+      }
+    }
+
     this.classList.toggle('flipped');
   });
 });
